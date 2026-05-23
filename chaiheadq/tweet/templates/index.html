@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+TweetZone 
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 70vh;">
+  <div class="text-center p-5 bg-secondary bg-opacity-25 rounded shadow">
+    <h1 class="mb-4">Welcome to TweetZone </h1>
+    <p class="lead">Your mini TalksZone to share and connect!</p>
+    <a href="{% url 'tweet_list' %}" class="btn btn-primary btn-lg mt-3">Explore Tweets</a>
+  </div>
+</div>
+{% endblock %}

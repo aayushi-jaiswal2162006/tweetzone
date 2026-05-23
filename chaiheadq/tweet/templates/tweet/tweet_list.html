@@ -1,0 +1,192 @@
+{% extends 'layout.html' %}
+
+{% block title %}Tweet List{% endblock %}
+
+{% block content %}
+<style>
+  .tweet-container {
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .tweet-card {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 1.5rem;
+  }
+
+  .tweet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tweet-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .tweet-header small {
+    color: #777;
+    font-size: 0.9rem;
+  }
+
+  .tweet-image {
+    margin-top: 0.8rem;
+  }
+
+  .tweet-image img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .tweet-content {
+    margin-top: 0.8rem;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .tweet-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1.5rem;
+    color: #555;
+    flex-wrap: wrap;
+  }
+
+  .tweet-actions i {
+    margin-right: 6px;
+  }
+
+  .tweet-actions a {
+    text-decoration: none;
+    color: #1da1f2;
+    font-weight: 500;
+  }
+
+  .tweet-actions a:hover {
+    text-decoration: underline;
+  }
+
+  .header-bar {
+    background-color: #1da1f2;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .header-bar h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .search-form input {
+    padding: 6px 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    width: 200px;
+  }
+
+  footer {
+    margin-top: 4rem;
+    padding: 1.5rem 0;
+    background-color: #f9f9f9;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #666;
+  }
+
+  .footer-links {
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-links a {
+    margin: 0 10px;
+    color: #1da1f2;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<!-- Header bar with logo and search -->
+<div class="header-bar">
+  <h1>🐥 ChatBird</h1>
+  <form method="get" class="search-form">
+    <input type="text" name="q" placeholder="Search tweets..." value="{{ request.GET.q }}">
+  </form>
+</div>
+
+<!-- Tweets Section -->
+<div class="tweet-container">
+  <h2><i class="fa-solid fa-comment-dots"></i> Latest Tweets</h2>
+
+  {% for tweet in tweets %}
+    <div class="tweet-card">
+      <div class="tweet-header">
+        <h3>
+  <i class="fa-solid fa-user"></i>
+  <a href="{% url 'profile_view' tweet.user.username %}">@{{ tweet.user.username }}</a>
+</h3>
+
+        <small><i class="fa-regular fa-clock"></i> {{ tweet.created_at|date:"M d, Y H:i" }}</small>
+      </div>
+
+      {% if tweet.photo %}
+        <div class="tweet-image">
+          <img src="{{ tweet.photo.url }}" alt="Tweet image">
+        </div>
+      {% endif %}
+
+      <div class="tweet-content">
+        {{ tweet.content }}
+      </div>
+
+      <div class="tweet-actions">
+        <a href="{% url 'tweet_detail' tweet.id %}"><i class="fa-solid fa-eye"></i> comment </a>
+        {% if user == tweet.user %}
+          <a href="{% url 'tweet_edit' tweet.id %}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+          <a href="{% url 'tweet_delete' tweet.id %}"><i class="fa-solid fa-trash"></i> Delete</a>
+        {% endif %}
+        
+        
+
+<form method="post" action="{% url 'tweet_like_toggle' tweet.id %}" style="display:inline;">
+  {% csrf_token %}
+  <button type="submit" style="background: none; border: none; cursor: pointer; font-size: 18px;">
+    {% if user in tweet.likes.all %}
+      <i class="fa-solid fa-heart" style="color: red;"></i>
+    {% else %}
+      <i class="fa-regular fa-heart" style="color: gray;"></i>
+    {% endif %}
+  </button>
+</form>
+
+<span style="margin-left:8px; font-weight:bold;">{{ tweet.total_likes }} Likes</span>
+
+      </div>
+    </div>
+  {% empty %}
+    <p>No tweets found.</p>
+  {% endfor %}
+</div>
+
+
+
+{% endblock %}

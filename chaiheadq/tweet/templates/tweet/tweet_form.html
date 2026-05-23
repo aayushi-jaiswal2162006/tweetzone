@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+TweetZone 
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+  <h1 class="text-center mb-3">Create your Tweets</h1>
+
+  <h2 class="text-center mb-4">
+    {% if form.instance.pk %}
+      Edit Tweet
+    {% else %}
+      Create Tweet
+    {% endif %}
+  </h2>
+
+  <form method="post" enctype="multipart/form-data" class="border rounded p-4 bg-dark text-light">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-warning mt-3 w-100">Submit</button>
+  </form>
+
+  <div class="text-center mt-3">
+    <a href="{% url 'tweet_list' %}" class="btn btn-secondary">Back to Tweet List</a>
+  </div>
+</div>
+{% endblock %}

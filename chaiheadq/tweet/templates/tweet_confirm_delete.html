@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Chai aur tweet - Confirm Delete
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column align-items-center justify-content-center" style="height: 60vh;">
+  <h1 class="text-center text-white mb-4">
+    Are you sure that you want to delete the tweet?
+  </h1>
+  <form method="post" class="d-flex gap-3">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger px-4">Delete</button>
+    <a class="btn btn-success px-4" href="{% url 'tweet_list' %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

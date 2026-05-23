@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - TwitZone</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      max-width: 500px;
+      width: 100%;
+    }
+    h2 {
+      margin: 0 0 20px 0;
+      font-weight: 700;
+      color: #42b72a;
+      text-align: center;
+    }
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #050505;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 16px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #42b72a;
+      box-shadow: 0 0 5px #42b72aaa;
+    }
+    /* Make "Full Width" inputs span two columns */
+    .full-width {
+      grid-column: span 2;
+    }
+    button {
+      grid-column: span 2;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      background-color: #42b72a;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #36a420;
+    }
+    .text-center {
+      grid-column: span 2;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #606770;
+    }
+    .text-center a {
+      color: #606770;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .text-center a:hover {
+      text-decoration: underline;
+    }
+    /* Responsive */
+    @media (max-width: 480px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      button {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Create a New Account</h2>
+    <form method="post" action="{% url 'register' %}">
+      {% csrf_token %}
+      <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" required />
+      </div>
+      <div>
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" placeholder="First Name" required />
+      </div>
+      <div>
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" placeholder="Last Name" required />
+      </div>
+      <div class="full-width">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email" required />
+      </div>
+      <div class="full-width">
+        <label for="password1">Password</label>
+        <input type="password" id="password1" name="password1" placeholder="Password" required />
+      </div>
+      <div class="full-width">
+        <label for="password2">Confirm Password</label>
+        <input type="password" id="password2" name="password2" placeholder="Confirm Password" required />
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p class="text-center">
+      Already have an account? <a href="{% url 'login' %}">Log in here</a>
+    </p>
+  </div>
+
+</body>
+</html>

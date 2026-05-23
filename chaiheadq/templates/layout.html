@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TwitZone{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #ecf0f3;
+        }
+
+        nav {
+            background-color: #1da1f2;
+            padding: 1rem 0;
+        }
+
+        nav .nav-container {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .main-content {
+            padding: 2rem 1rem;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        footer {
+            background-color: #1da1f2;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+    <h2><a href="{% url 'tweet_list' %}">TwitZone</a></h2>
+    <div>
+        <a href="{% url 'tweet_list' %}"><i class="fa-solid fa-house"></i> Home</a>
+        
+        {% if user.is_authenticated %}
+            <a href="{% url 'tweet_create' %}"><i class="fa-solid fa-feather"></i> Tweet</a>
+            <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" style="background:none; border:none; color:white; font-weight:500; cursor:pointer;">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+</form>
+
+
+        {% else %}
+            <a href="{% url 'login' %}"><i class="fa-solid fa-feather"></i> Tweet</a>
+            <a href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+        {% endif %}
+    </div>
+</div>
+
+    </nav>
+
+    <div class="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+<footer>
+  <div class="footer-links">
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+    <a href="#">Share</a>
+    <a href="#">Privacy</a>
+    
+  </div>
+  <div>Made with ❤️ by <strong>Me</strong></div>
+</footer>
+</body>
+</html>
